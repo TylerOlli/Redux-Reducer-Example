@@ -24,8 +24,26 @@ action = {
 };
 
 function appReducer(state, action) {
-  if(action.type === 'DELETE_FLAVOR'){
+  switch (action.type) {
+    case 'CREATE_FLAVOR':
+      return [
+        ...state,
+        {
+          flavor: action.flavor,
+          count: action.count
+        }
+      ];
+    case 'UPDATE_FLAVOR':
+      return state.map(icecream => {
+        if (icecream.flavor === action.flavor) {
+          icecream.count = action.count;
+        }
+        return icecream;
+      });
+    case 'DELETE_FLAVOR':
       return state.filter(icecream => icecream.flavor !== action.flavor);
+    default:
+      return state;
   }
 }
 
